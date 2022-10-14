@@ -28,6 +28,7 @@ const SignInForm = () => {
     try {
       const { user } = await signInAuthUserEmailAndPassword(email, password);
       await createUserDocumentFromAuth(user);
+
       resetFormFields();
     } catch (error) {
       switch(error.code) {
@@ -40,13 +41,11 @@ const SignInForm = () => {
         default:
           console.log('User sign-in encountered an error: ', error);
       }
-      console.log('User sign-in encountered an error: ', error);
     }
   }
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   }
 
   return (
