@@ -3,6 +3,7 @@ import Home from "./routes/Home/home";
 import Navigation from "./routes/Navigation/navigation";
 import Authentication from './routes/Authentication/authentication';
 import Shop from './routes/Shop/shop';
+import Checkout from './routes/Checkout/checkout';
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path='shop' element={<Shop />} />
         <Route path='auth' element={<Authentication />} />
+        <Route path='checkout' element={<Checkout />} />
       </Route>
     </Routes>
   );
