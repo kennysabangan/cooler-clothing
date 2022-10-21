@@ -13,7 +13,6 @@ import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { NavigationContainer, LogoContainer, NavLinks, NavLink } from './navigation.styles';
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
-  // const { currentUser } = useContext(UserContext);
   const { isCartOpen } = useContext(CartContext);
 
   return (
