@@ -3,6 +3,8 @@ import { createUserDocumentFromAuth, signInWithGooglePopup, signInAuthUserEmailA
 import FormInput from "../form-input/form-input";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button";
 import { ButtonsContainer, SignInContainer } from "./sign-in-form.styles.jsx";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-hot-toast';
 
 const defaultFormFields = {
   email: '',
@@ -12,6 +14,7 @@ const defaultFormFields = {
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -30,6 +33,8 @@ const SignInForm = () => {
       await createUserDocumentFromAuth(user);
 
       resetFormFields();
+      navigate('/');
+      toast.success('You have successfully logged in.')
     } catch (error) {
       switch(error.code) {
         case 'auth/wrong-password':
@@ -46,6 +51,8 @@ const SignInForm = () => {
 
   const signInWithGoogle = async () => {
     await signInWithGooglePopup();
+    navigate('/');
+    toast.success('You have successfully logged in.')
   }
 
   return (

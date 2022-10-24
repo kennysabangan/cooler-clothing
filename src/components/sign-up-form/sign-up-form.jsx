@@ -3,6 +3,8 @@ import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "
 import FormInput from "../form-input/form-input";
 import Button from "../button/button";
 import { SignUpContainer } from "./sign-up-form.styles";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-hot-toast';
 
 const defaultFormFields = {
   displayName: '',
@@ -14,6 +16,7 @@ const defaultFormFields = {
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -36,7 +39,9 @@ const SignUpForm = () => {
       const { user } = await createAuthUserWithEmailAndPassword(email, password);
       await createUserDocumentFromAuth(user, { displayName });
 
-      resetFormFields()
+      resetFormFields();
+      navigate('/');
+      toast.success('You have successfully logged in.')
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         alert('Cannot create user, email already in use.')
