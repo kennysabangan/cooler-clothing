@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { createUserDocumentFromAuth, signInWithGooglePopup, signInAuthUserEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button";
 import { ButtonsContainer, SignInContainer } from "./sign-in-form.styles.jsx";
-import { useNavigate } from "react-router-dom";
 import { toast } from 'react-hot-toast';
+import { useDispatch } from "react-redux";
+import { googleSignInStart, emailSignInStart } from "../../store/user/user.actions";
 
 const defaultFormFields = {
   email: '',
@@ -14,7 +14,7 @@ const defaultFormFields = {
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -25,15 +25,12 @@ const SignInForm = () => {
     setFormFields(defaultFormFields)
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     try {
-      const { user } = await signInAuthUserEmailAndPassword(email, password);
-      await createUserDocumentFromAuth(user);
-
+      dispatch(emailSignInStart(email, password))
       resetFormFields();
-      navigate('/');
       toast.success('You have successfully logged in.')
     } catch (error) {
       switch(error.code) {
@@ -49,10 +46,8 @@ const SignInForm = () => {
     }
   }
 
-  const signInWithGoogle = async () => {
-    await signInWithGooglePopup();
-    navigate('/');
-    toast.success('You have successfully logged in.')
+  const signInWithGoogle = () => {
+    dispatch(googleSignInStart());
   }
 
   return (

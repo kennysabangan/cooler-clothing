@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input";
 import Button from "../button/button";
 import { SignUpContainer } from "./sign-up-form.styles";
-import { useNavigate } from "react-router-dom";
-import { toast } from 'react-hot-toast';
+import { signUpStart } from "../../store/user/user.actions";
+import { useDispatch } from 'react-redux';
 
 const defaultFormFields = {
   displayName: '',
@@ -16,7 +15,7 @@ const defaultFormFields = {
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -36,12 +35,8 @@ const SignUpForm = () => {
     }
 
     try {
-      const { user } = await createAuthUserWithEmailAndPassword(email, password);
-      await createUserDocumentFromAuth(user, { displayName });
-
+      dispatch(signUpStart(email, password, displayName))
       resetFormFields();
-      navigate('/');
-      toast.success('You have successfully logged in.')
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         alert('Cannot create user, email already in use.')

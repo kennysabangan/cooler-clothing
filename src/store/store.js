@@ -6,7 +6,6 @@ import createSagaMiddleware from 'redux-saga';
 import { rootSaga } from './root-saga';
 
 import logger from 'redux-logger';
-
 import { rootReducer } from './root-reducer';
 
 const persistConfig = {

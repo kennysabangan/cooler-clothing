@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom'
-import { signOutUser } from '../../utils/firebase/firebase.utils';
 
 import CartIcon from '../../components/cart-icon/cart-icon';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown';
@@ -11,6 +10,7 @@ import { selectIsCartOpen } from '../../store/cart/cart.selector';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { NavigationContainer, LogoContainer, NavLinks, NavLink } from './navigation.styles';
 import { clearItemsFromCart } from '../../store/cart/cart.action';
+import { signOutStart } from '../../store/user/user.actions';
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -18,7 +18,7 @@ const Navigation = () => {
   const dispatch = useDispatch();
 
   const handleSignOut = () => {
-    signOutUser();
+    dispatch(signOutStart());
     dispatch(clearItemsFromCart());
   }
 
