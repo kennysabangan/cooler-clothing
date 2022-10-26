@@ -4,7 +4,6 @@ import FormInput from "../form-input/form-input";
 import Button from "../button/button";
 import { SignUpContainer } from "./sign-up-form.styles";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-hot-toast';
 
 const defaultFormFields = {
   displayName: '',
@@ -41,7 +40,6 @@ const SignUpForm = () => {
 
       resetFormFields();
       navigate('/');
-      toast.success('You have successfully logged in.')
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         alert('Cannot create user, email already in use.')
