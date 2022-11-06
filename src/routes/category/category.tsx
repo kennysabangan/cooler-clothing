@@ -7,8 +7,12 @@ import { useSelector } from 'react-redux';
 import { CategoryContainer, CategoryTitle } from './category.styles';
 import { selectCategoriesMap, selectIsLoading } from '../../store/categories/category.selector';
 
+type CategoryRouteParams = {
+  category: string;
+}
+
 const Category = () => {
-  const { category } = useParams();
+  const { category } = useParams<keyof CategoryRouteParams>() as CategoryRouteParams;
   const categoriesMap = useSelector(selectCategoriesMap);
   const isLoading = useSelector(selectIsLoading);
   const [products, setProducts] = useState(categoriesMap[category]);
