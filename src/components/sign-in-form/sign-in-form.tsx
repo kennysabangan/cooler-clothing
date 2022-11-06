@@ -2,7 +2,7 @@ import { useState, FormEvent, ChangeEvent } from "react";
 import { createUserDocumentFromAuth, signInWithGooglePopup, signInAuthUserEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button";
-import { ButtonsContainer, SignInContainer } from "./sign-in-form.styles.jsx";
+import { ButtonsContainer, SignInContainer } from "./sign-in-form.styles";
 import { useNavigate } from "react-router-dom";
 import { UserCredential } from "firebase/auth";
 
